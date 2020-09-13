@@ -16,6 +16,7 @@ namespace Emailer
         private const string MSG_THEME_FILE_NAME = "msg_theme.txt";
         private const string MSG_CONTENT_FILE_NAME = "msg_content.txt";
         private const string RECIPIENTS_FILE_NAME = "recipients.txt";
+        private const string FAILED_RECIPIENTS_FILE_NAME = "failed.txt";
         private const string ATTACHMENTS_DIRECTORY_NAME = "attachments";
 
         private static (string host, int port) GetSmtpCredentials()
@@ -186,8 +187,8 @@ namespace Emailer
 
             if (failedRecipients.Count != 0)
             {
-                File.WriteAllLines("failed.txt", failedRecipients);
-                Console.WriteLine("failed.txt formed");
+                File.WriteAllLines(FAILED_RECIPIENTS_FILE_NAME, failedRecipients);
+                Console.WriteLine($"{FAILED_RECIPIENTS_FILE_NAME} formed with {failedRecipients.Count} elements");
             }
 
             Console.WriteLine("DONE!");

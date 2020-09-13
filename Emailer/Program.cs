@@ -148,6 +148,8 @@ namespace Emailer
 
             var recipients = GetRecipients();
 
+            List<string> failedRecipients = new List<string>();
+
             MailAddress from = new MailAddress(email, nickname);
 
             using (SmtpClient sc = new SmtpClient(smtpHost, smtpPort))
@@ -165,16 +167,31 @@ namespace Emailer
                         mm.IsBodyHtml = false;
                         var messageAttachments = GetMessageAttachments();
                         AppendAttachments(mm, messageAttachments);
-                        sc.Send(mm);
+                        try
+                        {
+                            sc.Send(mm);
+
+                            Console.WriteLine($"SENT TO {recipient}");
+                        }
+                        catch
+                        {
+                            Console.WriteLine($"ERROR TO {recipient}");
+                            failedRecipients.Add(recipient);
+                        }
+
                         FreeAttachmentsStreams(messageAttachments);
                     }
-
-                    Console.WriteLine($"SENT TO {recipient}");
                 }
             }
 
+            if (failedRecipients.Count != 0)
+            {
+                File.WriteAllLines("failed.txt", failedRecipients);
+                Console.WriteLine("failed.txt formed");
+            }
 
             Console.WriteLine("DONE!");
+            Console.ReadKey();
         }
     }
 }

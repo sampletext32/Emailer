@@ -176,9 +176,9 @@ namespace Emailer
 
                     Console.WriteLine($"SUCCESS TO {recipient}");
                 }
-                catch
+                catch (Exception ex)
                 {
-                    Console.WriteLine($"ERROR TO {recipient}");
+                    Console.WriteLine($"ERROR TO {recipient} - {ex.Message}");
                     failedRecipients.Add(recipient);
                 }
 

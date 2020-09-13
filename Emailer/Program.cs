@@ -157,36 +157,32 @@ namespace Emailer
 
             MailAddress from = new MailAddress(email, nickname);
 
-            using (SmtpClient sc = new SmtpClient(smtpHost, smtpPort))
+            using SmtpClient sc = new SmtpClient(smtpHost, smtpPort);
+            foreach (var recipient in recipients)
             {
-                foreach (var recipient in recipients)
+                sc.EnableSsl = true;
+                sc.Credentials = new NetworkCredential(username, password);
+
+                MailAddress to = new MailAddress(recipient);
+                using MailMessage mm = new MailMessage(@from, to);
+                mm.Subject = messageTheme;
+                mm.Body = messageContent;
+                mm.IsBodyHtml = false;
+                var messageAttachments = GetMessageAttachments();
+                AppendAttachments(mm, messageAttachments);
+                try
                 {
-                    sc.EnableSsl = true;
-                    sc.Credentials = new NetworkCredential(username, password);
+                    sc.Send(mm);
 
-                    MailAddress to = new MailAddress(recipient);
-                    using (MailMessage mm = new MailMessage(from, to))
-                    {
-                        mm.Subject = messageTheme;
-                        mm.Body = messageContent;
-                        mm.IsBodyHtml = false;
-                        var messageAttachments = GetMessageAttachments();
-                        AppendAttachments(mm, messageAttachments);
-                        try
-                        {
-                            sc.Send(mm);
-
-                            Console.WriteLine($"SUCCESS TO {recipient}");
-                        }
-                        catch
-                        {
-                            Console.WriteLine($"ERROR TO {recipient}");
-                            failedRecipients.Add(recipient);
-                        }
-
-                        FreeAttachmentsStreams(messageAttachments);
-                    }
+                    Console.WriteLine($"SUCCESS TO {recipient}");
                 }
+                catch
+                {
+                    Console.WriteLine($"ERROR TO {recipient}");
+                    failedRecipients.Add(recipient);
+                }
+
+                FreeAttachmentsStreams(messageAttachments);
             }
 
             if (failedRecipients.Count != 0)

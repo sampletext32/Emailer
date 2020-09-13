@@ -10,9 +10,17 @@ namespace Emailer
 {
     class Program
     {
+        private const string SMTP_CREDENTIALS_FILE_NAME = "smtp.txt";
+        private const string SENDER_CREDENTIALS_FILE_NAME = "sender_credentials.txt";
+        private const string MSG_SENDER_FILE_NAME = "msg_sender.txt";
+        private const string MSG_THEME_FILE_NAME = "msg_theme.txt";
+        private const string MSG_CONTENT_FILE_NAME = "msg_content.txt";
+        private const string RECIPIENTS_FILE_NAME = "recipients.txt";
+        private const string ATTACHMENTS_DIRECTORY_NAME = "attachments";
+
         private static (string host, int port) GetSmtpCredentials()
         {
-            string[] smptCredentials = File.ReadAllLines("smtp.txt");
+            string[] smptCredentials = File.ReadAllLines(SMTP_CREDENTIALS_FILE_NAME);
             string smtpHost = smptCredentials[0];
             int smtpPort = Convert.ToInt32(smptCredentials[1]);
             return (smtpHost, smtpPort);
@@ -20,7 +28,7 @@ namespace Emailer
 
         private static (string username, string password) GetSenderCredentials()
         {
-            string[] emailCredentials = File.ReadAllLines("sender_credentials.txt");
+            string[] emailCredentials = File.ReadAllLines(SENDER_CREDENTIALS_FILE_NAME);
             string emailUsername = emailCredentials[0];
             string emailPassword = emailCredentials[1];
             return (emailUsername, emailPassword);
@@ -28,7 +36,7 @@ namespace Emailer
 
         private static (string email, string nickname) GetMessageSender()
         {
-            string[] msgSenderData = File.ReadAllLines("msg_sender.txt");
+            string[] msgSenderData = File.ReadAllLines(MSG_SENDER_FILE_NAME);
             string msgSenderEmail = msgSenderData[0];
             string msgSenderNickname = msgSenderData[1];
             return (msgSenderEmail, msgSenderNickname);
@@ -36,23 +44,22 @@ namespace Emailer
 
         private static string GetMessageTheme()
         {
-            return File.ReadAllText("msg_theme.txt");
+            return File.ReadAllText(MSG_THEME_FILE_NAME);
         }
 
         private static string GetMessageContent()
         {
-            return File.ReadAllText("msg_content.txt");
+            return File.ReadAllText(MSG_CONTENT_FILE_NAME);
         }
 
         private static List<string> GetRecipients()
         {
-            return File.ReadAllLines("recipients.txt").ToList();
+            return File.ReadAllLines(RECIPIENTS_FILE_NAME).ToList();
         }
 
         private static List<Attachment> GetMessageAttachments()
         {
-            string folder = "attachments";
-            var files = new DirectoryInfo(folder).EnumerateFiles();
+            var files = new DirectoryInfo(ATTACHMENTS_DIRECTORY_NAME).EnumerateFiles();
 
             List<Attachment> attachments = new List<Attachment>();
 
@@ -81,8 +88,57 @@ namespace Emailer
             }
         }
 
+        private static bool CheckFiles()
+        {
+            if (!File.Exists(SMTP_CREDENTIALS_FILE_NAME))
+            {
+                Console.WriteLine($"{SMTP_CREDENTIALS_FILE_NAME} not found");
+                return false;
+            }
+
+            if (!File.Exists(SENDER_CREDENTIALS_FILE_NAME))
+            {
+                Console.WriteLine($"{SENDER_CREDENTIALS_FILE_NAME} not found");
+                return false;
+            }
+
+            if (!File.Exists(MSG_SENDER_FILE_NAME))
+            {
+                Console.WriteLine($"{MSG_SENDER_FILE_NAME} not found");
+                return false;
+            }
+
+            if (!File.Exists(MSG_THEME_FILE_NAME))
+            {
+                Console.WriteLine($"{MSG_THEME_FILE_NAME} not found");
+                return false;
+            }
+
+            if (!File.Exists(MSG_CONTENT_FILE_NAME))
+            {
+                Console.WriteLine($"{MSG_CONTENT_FILE_NAME} not found");
+                return false;
+            }
+
+            if (!File.Exists(RECIPIENTS_FILE_NAME))
+            {
+                Console.WriteLine($"{RECIPIENTS_FILE_NAME} not found");
+                return false;
+            }
+
+            if (!Directory.Exists(ATTACHMENTS_DIRECTORY_NAME))
+            {
+                Console.WriteLine($"{ATTACHMENTS_DIRECTORY_NAME} not found");
+                return false;
+            }
+
+            return true;
+        }
+
         static void Main(string[] args)
         {
+            if (!CheckFiles()) return;
+
             var (smtpHost, smtpPort) = GetSmtpCredentials();
             var (username, password) = GetSenderCredentials();
             var (email, nickname) = GetMessageSender();

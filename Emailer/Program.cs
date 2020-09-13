@@ -150,9 +150,9 @@ namespace Emailer
 
             MailAddress from = new MailAddress(email, nickname);
 
-            recipients.ForEach(recipient =>
+            using (SmtpClient sc = new SmtpClient(smtpHost, smtpPort))
             {
-                using (SmtpClient sc = new SmtpClient(smtpHost, smtpPort))
+                foreach (var recipient in recipients)
                 {
                     sc.EnableSsl = true;
                     sc.Credentials = new NetworkCredential(username, password);
@@ -171,7 +171,7 @@ namespace Emailer
 
                     Console.WriteLine($"SENT TO {recipient}");
                 }
-            });
+            }
 
 
             Console.WriteLine("DONE!");

@@ -138,7 +138,11 @@ namespace Emailer
 
         static void Main(string[] args)
         {
-            if (!CheckFiles()) return;
+            if (!CheckFiles())
+            {
+                Console.WriteLine("Some of the required files missing! Abort.");
+                return;
+            }
 
             var (smtpHost, smtpPort) = GetSmtpCredentials();
             var (username, password) = GetSenderCredentials();

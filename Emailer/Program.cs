@@ -44,9 +44,9 @@ namespace Emailer
             return File.ReadAllText("msg_content.txt");
         }
 
-        private static string[] GetRecipients()
+        private static List<string> GetRecipients()
         {
-            return File.ReadAllLines("recipients.txt");
+            return File.ReadAllLines("recipients.txt").ToList();
         }
 
         private static List<Attachment> GetMessageAttachments()
@@ -94,7 +94,7 @@ namespace Emailer
 
             MailAddress from = new MailAddress(email, nickname);
 
-            recipients.AsParallel().WithDegreeOfParallelism(2).ForAll(recipient =>
+            recipients.ForEach(recipient =>
             {
                 using (SmtpClient sc = new SmtpClient(smtpHost, smtpPort))
                 {

@@ -172,7 +172,7 @@ namespace Emailer
                         {
                             sc.Send(mm);
 
-                            Console.WriteLine($"SENT TO {recipient}");
+                            Console.WriteLine($"SUCCESS TO {recipient}");
                         }
                         catch
                         {

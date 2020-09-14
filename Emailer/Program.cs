@@ -141,6 +141,7 @@ namespace Emailer
             if (!CheckFiles())
             {
                 Console.WriteLine("Some of the required files missing! Abort.");
+                Console.ReadKey();
                 return;
             }
 

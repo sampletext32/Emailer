@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Threading;
 
 namespace Emailer
 {
@@ -182,6 +183,8 @@ namespace Emailer
                 }
 
                 FreeAttachmentsStreams(messageAttachments);
+
+                Thread.Sleep(300);
             }
 
             if (failedRecipients.Count != 0)

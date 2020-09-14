@@ -21,25 +21,25 @@ namespace Emailer
 
         private static (string host, int port) GetSmtpCredentials()
         {
-            string[] smtpCredentials = File.ReadAllLines(SMTP_CREDENTIALS_FILE_NAME);
-            string smtpHost = smtpCredentials[0];
-            int smtpPort = Convert.ToInt32(smtpCredentials[1]);
+            var smtpCredentials = File.ReadAllLines(SMTP_CREDENTIALS_FILE_NAME);
+            var smtpHost = smtpCredentials[0];
+            var smtpPort = Convert.ToInt32(smtpCredentials[1]);
             return (smtpHost, smtpPort);
         }
 
         private static (string username, string password) GetSenderCredentials()
         {
-            string[] emailCredentials = File.ReadAllLines(SENDER_CREDENTIALS_FILE_NAME);
-            string emailUsername = emailCredentials[0];
-            string emailPassword = emailCredentials[1];
+            var emailCredentials = File.ReadAllLines(SENDER_CREDENTIALS_FILE_NAME);
+            var emailUsername = emailCredentials[0];
+            var emailPassword = emailCredentials[1];
             return (emailUsername, emailPassword);
         }
 
         private static (string email, string nickname) GetMessageSender()
         {
-            string[] msgSenderData = File.ReadAllLines(MSG_SENDER_FILE_NAME);
-            string msgSenderEmail = msgSenderData[0];
-            string msgSenderNickname = msgSenderData[1];
+            var msgSenderData = File.ReadAllLines(MSG_SENDER_FILE_NAME);
+            var msgSenderEmail = msgSenderData[0];
+            var msgSenderNickname = msgSenderData[1];
             return (msgSenderEmail, msgSenderNickname);
         }
 
@@ -62,8 +62,7 @@ namespace Emailer
         {
             var files = new DirectoryInfo(ATTACHMENTS_DIRECTORY_NAME).EnumerateFiles();
 
-            List<Attachment> attachments = new List<Attachment>();
-
+            var attachments = new List<Attachment>();
             foreach (var file in files)
             {
                 var fileStream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read);

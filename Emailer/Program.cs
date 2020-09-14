@@ -21,9 +21,9 @@ namespace Emailer
 
         private static (string host, int port) GetSmtpCredentials()
         {
-            string[] smptCredentials = File.ReadAllLines(SMTP_CREDENTIALS_FILE_NAME);
-            string smtpHost = smptCredentials[0];
-            int smtpPort = Convert.ToInt32(smptCredentials[1]);
+            string[] smtpCredentials = File.ReadAllLines(SMTP_CREDENTIALS_FILE_NAME);
+            string smtpHost = smtpCredentials[0];
+            int smtpPort = Convert.ToInt32(smtpCredentials[1]);
             return (smtpHost, smtpPort);
         }
 

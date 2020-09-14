@@ -153,26 +153,25 @@ namespace Emailer
 
             var recipients = GetRecipients();
 
-            List<string> failedRecipients = new List<string>();
+            var failedRecipients = new List<string>();
 
-            MailAddress from = new MailAddress(email, nickname);
+            var mailAddressFrom = new MailAddress(email, nickname);
 
-            using SmtpClient sc = new SmtpClient(smtpHost, smtpPort);
+            using var smtpClient = new SmtpClient(smtpHost, smtpPort);
+            smtpClient.EnableSsl = true;
+            smtpClient.Credentials = new NetworkCredential(username, password);
             foreach (var recipient in recipients)
             {
-                sc.EnableSsl = true;
-                sc.Credentials = new NetworkCredential(username, password);
-
-                MailAddress to = new MailAddress(recipient);
-                using MailMessage mm = new MailMessage(@from, to);
-                mm.Subject = messageTheme;
-                mm.Body = messageContent;
-                mm.IsBodyHtml = false;
+                var mailAddressTo = new MailAddress(recipient);
+                using var mailMessage = new MailMessage(mailAddressFrom, mailAddressTo);
+                mailMessage.Subject = messageTheme;
+                mailMessage.Body = messageContent;
+                mailMessage.IsBodyHtml = false;
                 var messageAttachments = GetMessageAttachments();
-                AppendAttachments(mm, messageAttachments);
+                AppendAttachments(mailMessage, messageAttachments);
                 try
                 {
-                    sc.Send(mm);
+                    smtpClient.Send(mailMessage);
 
                     Console.WriteLine($"SUCCESS TO {recipient}");
                 }

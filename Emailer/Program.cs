@@ -161,8 +161,9 @@ namespace Emailer
             using var smtpClient = new SmtpClient(smtpHost, smtpPort);
             smtpClient.EnableSsl = true;
             smtpClient.Credentials = new NetworkCredential(username, password);
-            foreach (var recipient in recipients)
+            for (var i = 0; i < recipients.Count; i++)
             {
+                var recipient = recipients[i];
                 var mailAddressTo = new MailAddress(recipient);
                 using var mailMessage = new MailMessage(mailAddressFrom, mailAddressTo);
                 mailMessage.Subject = messageTheme;
@@ -174,11 +175,11 @@ namespace Emailer
                 {
                     smtpClient.Send(mailMessage);
 
-                    Console.WriteLine($"SUCCESS TO {recipient}");
+                    Console.WriteLine($"{i + 1}/{recipients.Count} SUCCESS TO {recipient}");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"ERROR TO {recipient} - {ex.Message}");
+                    Console.WriteLine($"{i + 1}/{recipients.Count} ERROR TO {recipient} - {ex.Message}");
                     failedRecipients.Add(recipient);
                 }
 

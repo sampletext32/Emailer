@@ -10,18 +10,18 @@ namespace Emailer
 {
     class Program
     {
-        private const string SMTP_CREDENTIALS_FILE_NAME = "smtp.txt";
-        private const string SENDER_CREDENTIALS_FILE_NAME = "sender_credentials.txt";
-        private const string MSG_SENDER_FILE_NAME = "msg_sender.txt";
-        private const string MSG_THEME_FILE_NAME = "msg_theme.txt";
-        private const string MSG_CONTENT_FILE_NAME = "msg_content.txt";
-        private const string RECIPIENTS_FILE_NAME = "recipients.txt";
-        private const string FAILED_RECIPIENTS_FILE_NAME = "failed.txt";
-        private const string ATTACHMENTS_DIRECTORY_NAME = "attachments";
+        private const string SmtpCredentialsFileName = "smtp.txt";
+        private const string SenderCredentialsFileName = "sender_credentials.txt";
+        private const string MsgSenderFileName = "msg_sender.txt";
+        private const string MsgThemeFileName = "msg_theme.txt";
+        private const string MsgContentFileName = "msg_content.txt";
+        private const string RecipientsFileName = "recipients.txt";
+        private const string FailedRecipientsFileName = "failed.txt";
+        private const string AttachmentsDirectoryName = "attachments";
 
         private static (string host, int port) GetSmtpCredentials()
         {
-            var smtpCredentials = File.ReadAllLines(SMTP_CREDENTIALS_FILE_NAME);
+            var smtpCredentials = File.ReadAllLines(SmtpCredentialsFileName);
             var smtpHost = smtpCredentials[0];
             var smtpPort = Convert.ToInt32(smtpCredentials[1]);
             return (smtpHost, smtpPort);
@@ -29,7 +29,7 @@ namespace Emailer
 
         private static (string username, string password) GetSenderCredentials()
         {
-            var emailCredentials = File.ReadAllLines(SENDER_CREDENTIALS_FILE_NAME);
+            var emailCredentials = File.ReadAllLines(SenderCredentialsFileName);
             var emailUsername = emailCredentials[0];
             var emailPassword = emailCredentials[1];
             return (emailUsername, emailPassword);
@@ -37,7 +37,7 @@ namespace Emailer
 
         private static (string email, string nickname) GetMessageSender()
         {
-            var msgSenderData = File.ReadAllLines(MSG_SENDER_FILE_NAME);
+            var msgSenderData = File.ReadAllLines(MsgSenderFileName);
             var msgSenderEmail = msgSenderData[0];
             var msgSenderNickname = msgSenderData[1];
             return (msgSenderEmail, msgSenderNickname);
@@ -45,22 +45,22 @@ namespace Emailer
 
         private static string GetMessageTheme()
         {
-            return File.ReadAllText(MSG_THEME_FILE_NAME);
+            return File.ReadAllText(MsgThemeFileName);
         }
 
         private static string GetMessageContent()
         {
-            return File.ReadAllText(MSG_CONTENT_FILE_NAME);
+            return File.ReadAllText(MsgContentFileName);
         }
 
         private static List<string> GetRecipients()
         {
-            return File.ReadAllLines(RECIPIENTS_FILE_NAME).ToList();
+            return File.ReadAllLines(RecipientsFileName).ToList();
         }
 
         private static List<Attachment> GetMessageAttachments()
         {
-            var files = new DirectoryInfo(ATTACHMENTS_DIRECTORY_NAME).EnumerateFiles();
+            var files = new DirectoryInfo(AttachmentsDirectoryName).EnumerateFiles();
 
             var attachments = new List<Attachment>();
             foreach (var file in files)
@@ -90,52 +90,52 @@ namespace Emailer
 
         private static bool CheckFiles()
         {
-            if (!File.Exists(SMTP_CREDENTIALS_FILE_NAME))
+            if (!File.Exists(SmtpCredentialsFileName))
             {
-                Console.WriteLine($"{SMTP_CREDENTIALS_FILE_NAME} not found");
+                Console.WriteLine($"{SmtpCredentialsFileName} not found");
                 return false;
             }
 
-            if (!File.Exists(SENDER_CREDENTIALS_FILE_NAME))
+            if (!File.Exists(SenderCredentialsFileName))
             {
-                Console.WriteLine($"{SENDER_CREDENTIALS_FILE_NAME} not found");
+                Console.WriteLine($"{SenderCredentialsFileName} not found");
                 return false;
             }
 
-            if (!File.Exists(MSG_SENDER_FILE_NAME))
+            if (!File.Exists(MsgSenderFileName))
             {
-                Console.WriteLine($"{MSG_SENDER_FILE_NAME} not found");
+                Console.WriteLine($"{MsgSenderFileName} not found");
                 return false;
             }
 
-            if (!File.Exists(MSG_THEME_FILE_NAME))
+            if (!File.Exists(MsgThemeFileName))
             {
-                Console.WriteLine($"{MSG_THEME_FILE_NAME} not found");
+                Console.WriteLine($"{MsgThemeFileName} not found");
                 return false;
             }
 
-            if (!File.Exists(MSG_CONTENT_FILE_NAME))
+            if (!File.Exists(MsgContentFileName))
             {
-                Console.WriteLine($"{MSG_CONTENT_FILE_NAME} not found");
+                Console.WriteLine($"{MsgContentFileName} not found");
                 return false;
             }
 
-            if (!File.Exists(RECIPIENTS_FILE_NAME))
+            if (!File.Exists(RecipientsFileName))
             {
-                Console.WriteLine($"{RECIPIENTS_FILE_NAME} not found");
+                Console.WriteLine($"{RecipientsFileName} not found");
                 return false;
             }
 
-            if (!Directory.Exists(ATTACHMENTS_DIRECTORY_NAME))
+            if (!Directory.Exists(AttachmentsDirectoryName))
             {
-                Console.WriteLine($"{ATTACHMENTS_DIRECTORY_NAME} not found");
+                Console.WriteLine($"{AttachmentsDirectoryName} not found");
                 return false;
             }
 
             return true;
         }
 
-        static void Main(string[] args)
+        private static void Main()
         {
             if (!CheckFiles())
             {
@@ -186,8 +186,8 @@ namespace Emailer
 
             if (failedRecipients.Count != 0)
             {
-                File.WriteAllLines(FAILED_RECIPIENTS_FILE_NAME, failedRecipients);
-                Console.WriteLine($"{FAILED_RECIPIENTS_FILE_NAME} formed with {failedRecipients.Count} elements");
+                File.WriteAllLines(FailedRecipientsFileName, failedRecipients);
+                Console.WriteLine($"{FailedRecipientsFileName} formed with {failedRecipients.Count} elements");
             }
 
             Console.WriteLine("DONE!");

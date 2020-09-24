@@ -1,0 +1,19 @@
+name: .NET Core Action
+on:  push      
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v1  
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.x
+      - name: dotnet Publish
+        run: dotnet publish Emailer/Emailer.csproj -c Release --framework net472 --runtime win-x64
+        # make an artifact
+      - name: Upload Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: build
+          path: D:\a\Emailer\Emailer\Emailer\bin\Release\net472\win-x64\publish\

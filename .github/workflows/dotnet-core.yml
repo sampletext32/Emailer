@@ -10,10 +10,10 @@ jobs:
         with:
           dotnet-version: 3.1.x
       - name: dotnet Publish
-        run: dotnet publish Emailer/Emailer.csproj -c Release --framework netcoreapp3.1 --runtime win-x64 /p:PublishSingleFile=true
+        run: dotnet publish Emailer/Emailer.csproj -c Release --framework net472 --runtime win-x64 /p:PublishSingleFile=true
         # make an artifact
       - name: Upload Artifact
         uses: actions/upload-artifact@master
         with:
           name: build
-          path: D:\a\Emailer\Emailer\Emailer\bin\Release\netcoreapp3.1\win-x64\publish\
+          path: D:\a\Emailer\Emailer\Emailer\bin\Release\net472\win-x64\publish\

@@ -158,34 +158,37 @@ namespace Emailer
 
             var mailAddressFrom = new MailAddress(email, nickname);
 
-            using var smtpClient = new SmtpClient(smtpHost, smtpPort);
-            smtpClient.EnableSsl = true;
-            smtpClient.Credentials = new NetworkCredential(username, password);
-            for (var i = 0; i < recipients.Count; i++)
+            using (var smtpClient = new SmtpClient(smtpHost, smtpPort))
             {
-                var recipient = recipients[i];
-                var mailAddressTo = new MailAddress(recipient);
-                using var mailMessage = new MailMessage(mailAddressFrom, mailAddressTo);
-                mailMessage.Subject = messageTheme;
-                mailMessage.Body = messageContent;
-                mailMessage.IsBodyHtml = false;
-                var messageAttachments = GetMessageAttachments();
-                AppendAttachments(mailMessage, messageAttachments);
-                try
+                smtpClient.EnableSsl = true;
+                smtpClient.Credentials = new NetworkCredential(username, password);
+                for (var i = 0; i < recipients.Count; i++)
                 {
-                    smtpClient.Send(mailMessage);
+                    var recipient = recipients[i];
+                    var mailAddressTo = new MailAddress(recipient);
+                    using (var mailMessage = new MailMessage(mailAddressFrom, mailAddressTo))
+                    {
+                        mailMessage.Subject = messageTheme;
+                        mailMessage.Body = messageContent;
+                        mailMessage.IsBodyHtml = false;
+                        var messageAttachments = GetMessageAttachments();
+                        AppendAttachments(mailMessage, messageAttachments);
+                        try
+                        {
+                            smtpClient.Send(mailMessage);
+                            Console.WriteLine($"{i + 1}/{recipients.Count} SUCCESS TO {recipient}");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"{i + 1}/{recipients.Count} ERROR TO {recipient} - {ex.Message}");
+                            failedRecipients.Add(recipient);
+                        }
 
-                    Console.WriteLine($"{i + 1}/{recipients.Count} SUCCESS TO {recipient}");
+                        FreeAttachmentsStreams(messageAttachments);
+                    }
+
+                    Thread.Sleep(300);
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"{i + 1}/{recipients.Count} ERROR TO {recipient} - {ex.Message}");
-                    failedRecipients.Add(recipient);
-                }
-
-                FreeAttachmentsStreams(messageAttachments);
-
-                Thread.Sleep(300);
             }
 
             if (failedRecipients.Count != 0)

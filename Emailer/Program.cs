@@ -162,6 +162,7 @@ namespace Emailer
             {
                 smtpClient.EnableSsl = true;
                 smtpClient.Credentials = new NetworkCredential(username, password);
+                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
                 for (var i = 0; i < recipients.Count; i++)
                 {
                     var recipient = recipients[i];
@@ -180,7 +181,7 @@ namespace Emailer
                         }
                         catch (Exception ex)
                         {
-                            Console.WriteLine($"{i + 1}/{recipients.Count} ERROR TO {recipient} - {ex.Message}");
+                            Console.WriteLine($"{i + 1}/{recipients.Count} ERROR TO {recipient} - {ex}");
                             failedRecipients.Add(recipient);
                         }
 

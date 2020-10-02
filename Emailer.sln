@@ -5,9 +5,17 @@ VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Emailer", "Emailer\Emailer.csproj", "{A43E162E-269A-49AC-8CF0-C797A4BF1EFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParserEkb", "ParserEkb\ParserEkb.csproj", "{1D1FD2DA-B91D-4411-8FE0-580431012BAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParserEkb", "ParserEkb\ParserEkb.csproj", "{1D1FD2DA-B91D-4411-8FE0-580431012BAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParserKzn", "ParserKzn\ParserKzn.csproj", "{DC5F176F-512A-4B36-BE6C-8546C9E566FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParserKzn", "ParserKzn\ParserKzn.csproj", "{DC5F176F-512A-4B36-BE6C-8546C9E566FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParserNovosib", "ParserNovosib\ParserNovosib.csproj", "{5E3E0192-3D8C-4AB0-96D7-276318E16636}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParserNNovg", "ParserNNovg\ParserNNovg.csproj", "{3CB91234-140D-4CD7-9907-72F0EF47C922}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParserChelyab", "ParserChelyab\ParserChelyab.csproj", "{63463A1F-4617-4993-A71F-F2CA74AA161C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParserOmsk", "ParserOmsk\ParserOmsk.csproj", "{562A0168-5FE5-4ADA-B2F6-295F1254C995}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +35,22 @@ Global
 		{DC5F176F-512A-4B36-BE6C-8546C9E566FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC5F176F-512A-4B36-BE6C-8546C9E566FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC5F176F-512A-4B36-BE6C-8546C9E566FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E3E0192-3D8C-4AB0-96D7-276318E16636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E3E0192-3D8C-4AB0-96D7-276318E16636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E3E0192-3D8C-4AB0-96D7-276318E16636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E3E0192-3D8C-4AB0-96D7-276318E16636}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CB91234-140D-4CD7-9907-72F0EF47C922}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CB91234-140D-4CD7-9907-72F0EF47C922}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CB91234-140D-4CD7-9907-72F0EF47C922}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CB91234-140D-4CD7-9907-72F0EF47C922}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63463A1F-4617-4993-A71F-F2CA74AA161C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63463A1F-4617-4993-A71F-F2CA74AA161C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63463A1F-4617-4993-A71F-F2CA74AA161C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63463A1F-4617-4993-A71F-F2CA74AA161C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{562A0168-5FE5-4ADA-B2F6-295F1254C995}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{562A0168-5FE5-4ADA-B2F6-295F1254C995}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{562A0168-5FE5-4ADA-B2F6-295F1254C995}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{562A0168-5FE5-4ADA-B2F6-295F1254C995}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
